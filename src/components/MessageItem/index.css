@@ -1,0 +1,13 @@
+li {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.triangle {
+  margin: 0 10px;
+}
+
+h3 {
+  margin-right: 10px !important;
+}
