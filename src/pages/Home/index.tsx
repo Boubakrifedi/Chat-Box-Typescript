@@ -1,16 +1,17 @@
 import MessagesContainer from "../../containers/MessagesContainer";
 import SendContainer from "../../containers/SendContainer";
+import { Container, HomeTitle, Main } from "./HomeWrapper";
 
 const Home = () => {
   return (
     <>
-      <h2 className="home-title">Chat APP</h2>
-      <div id="container">
-        <main>
+      <HomeTitle>Chat App</HomeTitle>
+      <Container>
+        <Main>
           <MessagesContainer />
           <SendContainer />
-        </main>
-      </div>
+        </Main>
+      </Container>
     </>
   );
 };

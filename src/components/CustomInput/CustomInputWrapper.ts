@@ -1,4 +1,6 @@
-textarea {
+import styled from "styled-components";
+
+const CustomInputWrapper = styled.textarea`
   resize: none;
   border: none;
   display: block;
@@ -8,7 +10,10 @@ textarea {
   padding: 20px;
   font-size: 13px;
   margin-bottom: 13px;
-}
-textarea::placeholder {
-  color: #ddd;
-}
+
+  &::placeholder {
+    color: #ddd;
+  }
+`;
+
+export { CustomInputWrapper };

@@ -9,6 +9,7 @@ import { makeSelectLastIndex } from "../MessagesContainer/selectors";
 import { useSelector } from "react-redux";
 
 import { Message } from "../../utils/types";
+import { SendContainerWrapper } from "./SendContainerWrapper";
 
 const messagesState = createStructuredSelector({
   lastIndex: makeSelectLastIndex(),
@@ -40,7 +41,7 @@ const SendContainer = () => {
     setMessage(value);
   };
   return (
-    <footer>
+    <SendContainerWrapper>
       <CustomInput
         value={message}
         placeholder="Type your message"
@@ -48,7 +49,7 @@ const SendContainer = () => {
         onKeyPress={handleClick}
       />
       <CustomButton text="Send" onClick={handleClick} />
-    </footer>
+    </SendContainerWrapper>
   );
 };
 

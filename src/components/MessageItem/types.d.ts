@@ -4,3 +4,7 @@ interface MessageItemProps {
   name: string | undefined;
   message: string;
 }
+
+interface MessageItemWrapperProps {
+  from: string;
+}

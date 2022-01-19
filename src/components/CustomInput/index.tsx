@@ -1,13 +1,18 @@
-import "./index.css";
+import { CustomInputWrapper } from "./CustomInputWrapper";
 
-const CustomInput = ({ value, onChange, placeholder, onKeyPress }:CustomInputProps) => {
+const CustomInput = ({
+  value,
+  onChange,
+  placeholder,
+  onKeyPress,
+}: CustomInputProps) => {
   return (
-    <textarea
+    <CustomInputWrapper
       value={value}
       placeholder={placeholder}
       onChange={onChange}
       onKeyPress={onKeyPress}
-    />
+    ></CustomInputWrapper>
   );
 };
 

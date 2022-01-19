@@ -1,10 +1,11 @@
-import "./index.css";
+import { CustomButtonWrapper } from "./CustomButtonWrapper";
+import "./CustomButtonWrapper";
 
-const CustomButton = ({ text, onClick }:CustomButtonProps) => {
+const CustomButton = ({ text, onClick }: CustomButtonProps) => {
   return (
-    <a href="#" onClick={onClick}>
+    <CustomButtonWrapper href="#" onClick={onClick}>
       {text}
-    </a>
+    </CustomButtonWrapper>
   );
 };
 

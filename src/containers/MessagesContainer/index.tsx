@@ -9,6 +9,7 @@ import { makeSelectMessagesData } from "./selectors";
 import { collections } from "../../utils/constants";
 
 import { Message } from "../../utils/types";
+import { MessageContainerWrapper as ChatWrapper } from "./MessageContainerWrapper";
 
 const messagesState = createStructuredSelector({
   messages: makeSelectMessagesData(),
@@ -47,8 +48,8 @@ const MessagesContainer = () => {
   }, [messages]);
 
   return (
-    <ul id="chat">
-      {console.log('test', messages)}
+    <ChatWrapper>
+      {console.log("test", messages)}
       {messages &&
         messages.length > 0 &&
         messages.map((item: Message, index: number) => {
@@ -61,7 +62,7 @@ const MessagesContainer = () => {
           );
         })}
       <div ref={messageEndRef} />
-    </ul>
+    </ChatWrapper>
   );
 };
 

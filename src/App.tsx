@@ -1,7 +1,13 @@
 import Home from "./pages/Home";
-import "./styles/main.css";
+import GlobalStyle from "./styles/global-styles";
+
 function App() {
-  return <Home />;
+  return (
+    <>
+      <Home />
+      <GlobalStyle />
+    </>
+  );
 }
 
 export default App;

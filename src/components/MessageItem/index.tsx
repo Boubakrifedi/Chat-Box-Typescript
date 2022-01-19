@@ -1,15 +1,28 @@
 import { boolColor } from "../../utils/chat-utils";
-import "./index.css";
+import {
+  Date,
+  Entete,
+  From,
+  Message,
+  MessageItemWrapper,
+  Name,
+  Triangle,
+} from "./MessageItemWrapper";
+import styled from "styled-components";
+
 const MessageItem = ({ from, date, name, message }: MessageItemProps) => (
-  <li className={from}>
-    <div className="entete">
-      <h3>{date}</h3>
-      <h2>{name}</h2>
-      <span className={`status ${boolColor(from)}`}></span>
-    </div>
-    <div className="triangle"></div>
-    <div className="message">{message}</div>
-  </li>
+  // <MessageItemWrapper className={from} from={from}>
+  <MessageItemWrapper className={from} from={from}>
+    <Entete className="entete" from={from}>
+      <Date>{date}</Date>
+      <Name>{name}</Name>
+      <From className={`status ${boolColor(from)}`}></From>
+    </Entete>
+    <Triangle className="triangle"></Triangle>
+    <Message className="message" from={from}>
+      {message}
+    </Message>
+  </MessageItemWrapper>
 );
 MessageItem.defaultProps = {
   from: "you",
