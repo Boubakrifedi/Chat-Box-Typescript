@@ -1,9 +1,9 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { ValuesType } from "../../utils/types";
 
 import { LoginContainerWrapper } from "./LoginContainerWrapper";
-
+import { firebaseAuth } from "../../services/firebaseService";
 const LoginContainer = () => {
   const intialValues: ValuesType = { email: "", password: "" };
   const [formValues, setFormValues] = useState<ValuesType>(intialValues);
@@ -11,7 +11,9 @@ const LoginContainer = () => {
     email: "",
     password: "",
   });
+  const history = useNavigate();
 
+  const { signIn } = firebaseAuth();
   //   HandleClick Function
   const handleChange = (e: any) => {
     const { name, value } = e.target;
@@ -23,6 +25,17 @@ const LoginContainer = () => {
     //  to stop loading the page
     e.preventDefault();
     setFormErrors(validateForm(formValues));
+    const { password, email } = validateForm(formValues);
+
+    if (password || email) return;
+    signIn({ email: formValues.email, password: formValues.password })
+      .then((res) => {
+        setFormValues(intialValues);
+        history("/");
+      })
+      .catch((err) => {
+        alert(err.message);
+      });
   };
 
   // UseEffect to submit the form

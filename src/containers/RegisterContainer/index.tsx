@@ -1,7 +1,8 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { ValuesType } from "../../utils/types";
 import { RegisterContainerWrapper } from "./RegisterContainerWrapper";
+import { firebaseAuth, firebaseService } from "../../services/firebaseService";
 
 const RegisterContainer = () => {
   const intialValues = { username: "", email: "", password: "" };
@@ -11,6 +12,11 @@ const RegisterContainer = () => {
     email: "",
     password: "",
   });
+
+  const history = useNavigate();
+
+  const { signUp } = firebaseAuth();
+  const { create } = firebaseService("/users");
 
   //   HandleClick Funtion
   const handleChange = (e: any) => {
@@ -23,6 +29,28 @@ const RegisterContainer = () => {
   const onclick = (e: any) => {
     e.preventDefault();
     setFormErrors(validateForm(formValues));
+    const { password, email, username } = validateForm(formValues);
+
+    if (password || email || username) return;
+
+    signUp({
+      email: formValues.email,
+      password: formValues.password,
+    })
+      .then((res) => {
+        console.log("resss sccess", res);
+        create({
+          uid: res.user?.uid,
+          name: formValues.username,
+          email: res.user?.email,
+        }).then((res) => {
+          history("/login");
+        });
+        setFormValues(intialValues);
+      })
+      .catch((err) => {
+        alert(err.message);
+      });
   };
 
   //   ValidateForm Funtion
