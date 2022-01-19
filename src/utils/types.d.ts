@@ -22,4 +22,10 @@ interface User {
   name: string | undefined;
 }
 
-export { Action, GlobalState, Message, User };
+interface ValuesType {
+  username?: string;
+  email: string;
+  password: string;
+}
+
+export { Action, GlobalState, Message, User, ValuesType };
