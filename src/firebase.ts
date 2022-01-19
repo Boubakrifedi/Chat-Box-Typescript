@@ -1,5 +1,6 @@
 import firebase from "firebase/app";
 import "firebase/firestore";
+import "firebase/auth";
 import { firebaseConfig } from "./variables";
 
 let config = {
@@ -7,5 +8,7 @@ let config = {
 };
 
 firebase.initializeApp(config);
+const firestore = firebase.firestore();
+const auth = firebase.auth();
 
-export default firebase.firestore();
+export { firestore, auth };
