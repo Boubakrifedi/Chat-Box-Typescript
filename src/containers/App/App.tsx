@@ -1,10 +1,12 @@
-import Home from "./pages/Home";
-import GlobalStyle from "./styles/global-styles";
+import Home from "../../pages/Home";
+import GlobalStyle from "../../styles/global-styles";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import LoginContainer from "./containers/LoginContainer";
-import RegisterContainer from "./containers/RegisterContainer";
+import LoginContainer from "../LoginContainer";
+import RegisterContainer from "../RegisterContainer";
+
 
 function App() {
+  
   return (
     <>
       <BrowserRouter>

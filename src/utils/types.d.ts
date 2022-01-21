@@ -1,3 +1,4 @@
+import { AppState } from "../containers/App/types";
 import { MessagesState } from "../containers/MessagesContainer/types";
 
 interface Action {
@@ -7,6 +8,7 @@ interface Action {
 
 interface GlobalState {
   messagesState: MessagesState;
+  appState: AppState;
 }
 
 interface Message {
@@ -18,8 +20,9 @@ interface Message {
 }
 
 interface User {
-  userID: string | undefined;
+  uid: string | undefined;
   name: string | undefined;
+  email?: string | undefined;
 }
 
 interface ValuesType {

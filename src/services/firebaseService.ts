@@ -1,5 +1,5 @@
 import { firestore, auth } from "../firebase";
-import { ValuesType } from "../utils/types";
+import { User, ValuesType } from "../utils/types";
 
 const firebaseService = (collectionName: string) => {
   const db = firestore.collection(collectionName);
@@ -11,6 +11,10 @@ const firebaseService = (collectionName: string) => {
   const create = (data: any) => {
     return db.add(data);
   };
+  const getOne = async (uid: string | undefined) => {
+    if (!uid) return null;
+    return db.where("uid", "==", uid).get();
+  };
 
   const update = (id: string, value: any) => {
     return db.doc(id).update(value);
@@ -19,7 +23,7 @@ const firebaseService = (collectionName: string) => {
   const remove = (id: string) => {
     return db.doc(id).delete();
   };
-  return { getAll, create, update, remove };
+  return { getAll, create, update, remove, getOne };
 };
 
 const firebaseAuth = () => {
@@ -29,7 +33,10 @@ const firebaseAuth = () => {
   const signUp = async ({ email, password }: ValuesType) =>
     await auth.createUserWithEmailAndPassword(email, password);
 
-  return { signIn, signUp };
+  const logOut = async () => await auth.signOut();
+
+  return { signIn, signUp, logOut };
 };
 
-export { firebaseService, firebaseAuth };
+const currentUser = () => auth?.currentUser;
+export { firebaseService, firebaseAuth, currentUser };
