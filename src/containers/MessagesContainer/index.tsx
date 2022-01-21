@@ -10,16 +10,19 @@ import { collections } from "../../utils/constants";
 
 import { Message } from "../../utils/types";
 import { MessageContainerWrapper as ChatWrapper } from "./MessageContainerWrapper";
-
+import { auth } from "../../firebase";
+import { makeSelectUser } from "../App/selectors";
 const messagesState = createStructuredSelector({
   messages: makeSelectMessagesData(),
+  user: makeSelectUser(),
 });
 
 const MessagesContainer = () => {
-  const { messages } = useSelector(messagesState);
+  const { messages, user } = useSelector(messagesState);
 
   const dispatch = useDispatch();
   const { getAll } = firebaseService(collections.chat);
+
 
   // Ref
   const messageEndRef = useRef<any>(null);
@@ -49,13 +52,13 @@ const MessagesContainer = () => {
 
   return (
     <ChatWrapper>
-      {console.log("test", messages)}
+    
       {messages &&
         messages.length > 0 &&
         messages.map((item: Message, index: number) => {
           const messageProps = {
             ...item,
-            from: isCUrrentUser(item.user.userID),
+            from: isCUrrentUser(user?.uid ?? "", item.user.uid),
           };
           return (
             <MessageItem key={index} {...messageProps} name={item.user.name} />

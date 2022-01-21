@@ -1,9 +1,12 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { ValuesType } from "../../utils/types";
+import { User, ValuesType } from "../../utils/types";
 
 import { LoginContainerWrapper } from "./LoginContainerWrapper";
-import { firebaseAuth } from "../../services/firebaseService";
+import { firebaseAuth, firebaseService } from "../../services/firebaseService";
+import { collections } from "../../utils/constants";
+import { useDispatch } from "react-redux";
+import { setUserData } from "../App/actions";
 const LoginContainer = () => {
   const intialValues: ValuesType = { email: "", password: "" };
   const [formValues, setFormValues] = useState<ValuesType>(intialValues);
@@ -12,8 +15,10 @@ const LoginContainer = () => {
     password: "",
   });
   const history = useNavigate();
+  const dispatch = useDispatch();
 
   const { signIn } = firebaseAuth();
+  const { getOne } = firebaseService(collections.users);
   //   HandleClick Function
   const handleChange = (e: any) => {
     const { name, value } = e.target;
@@ -30,8 +35,16 @@ const LoginContainer = () => {
     if (password || email) return;
     signIn({ email: formValues.email, password: formValues.password })
       .then((res) => {
-        setFormValues(intialValues);
-        history("/");
+        getOne(res.user?.uid).then((querySnapshot) => {
+          querySnapshot?.forEach((doc) => {
+            // doc.data() is never undefined for query doc snapshots
+            console.log(doc.id, " => ", doc.data());
+
+            res && dispatch(setUserData(doc.data() as User));
+            setFormValues(intialValues);
+            history("/");
+          });
+        });
       })
       .catch((err) => {
         alert(err.message);
